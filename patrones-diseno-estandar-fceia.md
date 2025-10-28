@@ -1,5 +1,5 @@
 # Documentación de Patrones de Diseño - Estándar FCEIA
-## Hibrid Parking Parkin)
+## Casual Parkin
 
 **Autores:** Equipo de Desarrollo
 **Materia:** Ingeniería de Software
