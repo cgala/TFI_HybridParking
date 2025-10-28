@@ -1,5 +1,5 @@
 # Documentación de Patrones de Diseño - Estándar FCEIA
-## Sistema de Gestión de Propiedades Inmobiliarias (Casual Parking)
+## Hibrid Parking Parkin)
 
 **Autores:** Equipo de Desarrollo
 **Materia:** Ingeniería de Software
