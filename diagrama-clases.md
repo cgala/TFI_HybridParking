@@ -143,7 +143,7 @@ classDiagram
 
 - **Seguridad**:
   - Contraseñas hasheadas con bcrypt
-  - Protección CSRF
+  - Protección CSRF  (Cross-Site Request Forgery, o Falsificación de Petición entre Sitios) por token entre el server y foormularios o pages
   - Autenticación JWT
 
 - **Validación**: Express-validator en controladores
