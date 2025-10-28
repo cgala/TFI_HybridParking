@@ -9,7 +9,7 @@
 
 ## Resumen
 
-A continuación se presenta la documentación del uso de patrones de diseño en el sistema Casual Parking, una aplicación web para la gestión de propiedades inmobiliarias (garages). Se documentan cuatro patrones principales: **Singleton** (conexión a base de datos), **MVC** (arquitectura general), **Observer** (sistema de eventos y logging), y **Chain of Responsibility** (middleware de Express). Esta documentación sigue el estándar propuesto por Maximiliano Cristiá para la materia Ingeniería de Software de la FCEIA-UNR.
+A continuación se presenta la documentación del uso de patrones de diseño en el sistema Casual Parking, una aplicación web para la gestión garages. Se documentan cuatro patrones principales: **Singleton** (conexión a base de datos), **MVC** (arquitectura general), **Observer** (sistema de eventos y logging), y **Chain of Responsibility** (middleware de Express). Esta documentación sigue el estándar propuesto por Maximiliano Cristiá para la materia Ingeniería de Software de la FCEIA-UNR.
 
 ---
 
