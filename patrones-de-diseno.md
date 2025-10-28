@@ -1,4 +1,4 @@
-# Patrones de Diseño - Sistema de Bienes Raíces
+# Patrones de Diseño 
 
 Este documento describe los principales patrones de diseño implementados en el proyecto casualTFI, una aplicación web de gestión de propiedades inmobiliarias.
 
