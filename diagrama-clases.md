@@ -1,4 +1,4 @@
-# Diagrama de Clases - Sistema de Bienes Raíces
+# Diagrama de Clases - Casual Parking
 
 ## Diagrama en Mermaid
 
