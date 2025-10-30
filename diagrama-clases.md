@@ -93,10 +93,12 @@ classDiagram
         +upload(field, maxCount)
     }
 
-    Usuario "1" --> "0..*" Propiedad : posee
-    Precio "1" --> "0..*" Propiedad : categoriza
-    Categoria "1" --> "0..*" Propiedad : clasifica
+    %% Relaciones entre Modelos (Entidades de Dominio)
+    Usuario "1" *-- "0..*" Propiedad : posee
+    Precio "1" o-- "0..*" Propiedad : categoriza
+    Categoria "1" o-- "0..*" Propiedad : clasifica
 
+    %% Dependencias de Controladores con Modelos
     UsuarioController ..> Usuario : usa
     UsuarioController ..> EmailHelper : usa
     UsuarioController ..> TokenHelper : usa
@@ -114,10 +116,50 @@ classDiagram
 
 ## Descripción de Relaciones
 
-### Relaciones de Modelos:
-- **Usuario → Propiedad (1:N)**: Un usuario puede tener múltiples propiedades
-- **Precio → Propiedad (1:N)**: Un precio puede estar asociado a múltiples propiedades
-- **Categoría → Propiedad (1:N)**: Una categoría puede tener múltiples propiedades
+### Relaciones entre Modelos (Entidades de Dominio):
+
+#### 1. Usuario *-- Propiedad (Composición 1:N)
+- **Tipo**: Composición (diamante negro relleno)
+- **Cardinalidad**: 1 Usuario posee 0 o muchas Propiedades
+- **Justificación**: Las propiedades PERTENECEN a un usuario y su ciclo de vida está controlado por él. Una propiedad sin usuario propietario no tiene sentido en el contexto del sistema.
+- **Implementación**: `Propiedad.belongsTo(Usuario, { foreignKey: 'usuarioId' })` (models/index.js:10)
+- **Foreign Key**: `usuarioId` en tabla Propiedad
+
+#### 2. Precio o-- Propiedad (Agregación 1:N)
+- **Tipo**: Agregación (diamante blanco)
+- **Cardinalidad**: 1 Precio categoriza 0 o muchas Propiedades
+- **Justificación**: Precio es un catálogo de rangos de valores (ej: "$0-100k", "$100k-500k"). Las propiedades referencian un precio pero pueden existir independientemente. Si se elimina un rango de precio del catálogo, las propiedades no se eliminan.
+- **Implementación**: `Propiedad.belongsTo(Precio, { foreignKey: 'precioId' })` (models/index.js:8)
+- **Foreign Key**: `precioId` en tabla Propiedad
+
+#### 3. Categoria o-- Propiedad (Agregación 1:N)
+- **Tipo**: Agregación (diamante blanco)
+- **Cardinalidad**: 1 Categoría clasifica 0 o muchas Propiedades
+- **Justificación**: Categoría es un catálogo de tipos (ej: "Casa", "Departamento", "Garage"). Similar a Precio, las propiedades solo referencian categorías del catálogo pero mantienen su existencia independiente.
+- **Implementación**: `Propiedad.belongsTo(Categoria, { foreignKey: 'categoriaId' })` (models/index.js:9)
+- **Foreign Key**: `categoriaId` en tabla Propiedad
+
+### Relaciones de Dependencia (Controllers y Helpers):
+
+#### 4. Controllers ..> Modelos/Helpers (Dependencia)
+- **Tipo**: Dependencia (línea punteada con flecha)
+- **Justificación**: Los controladores USAN los modelos y helpers para realizar operaciones, pero no los contienen ni controlan su ciclo de vida.
+- **Ejemplos**:
+  - `UsuarioController ..> Usuario`: El controller importa y usa el modelo Usuario
+  - `PropiedadController ..> Propiedad`: El controller realiza operaciones CRUD sobre Propiedad
+  - `UsuarioController ..> EmailHelper`: El controller usa el helper para enviar emails
+  - `PropiedadController ..> SubirImagenMiddleware`: El controller usa el middleware Multer
+
+### Notación UML utilizada:
+
+| Símbolo | Tipo de Relación | Significado |
+|---------|------------------|-------------|
+| `*--` | Composición | El contenedor controla el ciclo de vida (el todo posee las partes) |
+| `o--` | Agregación | El contenedor tiene las partes pero no controla su ciclo de vida |
+| `--` | Asociación | Relación entre objetos independientes |
+| `..>` | Dependencia | Un elemento usa otro pero no lo contiene |
+| `--|>` | Herencia | Relación es-un (no usada en este diagrama) |
+| `..|>` | Realización/Implementación | Una clase implementa una interfaz (no usada) |
 
 ### Componentes del Sistema:
 
