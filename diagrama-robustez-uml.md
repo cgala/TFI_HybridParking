@@ -53,14 +53,14 @@ graph LR
     %% ENTITIES
     E1((Usuario<br/>DB))
 
-    Actor -->|Ingresa datos| B1
-    B1 -->|Envía formulario| C1
-    C1 -->|Datos válidos| C2
-    C2 -->|Crea usuario| E1
-    E1 -->|Usuario creado| C2
-    C2 -->|Solicita envío| C3
-    C3 -->|Envía email| B2
-    B2 -.->|Recibe| Actor
+    Actor -->|1. Ingresa datos| B1
+    B1 -->|2. Envía formulario| C1
+    C1 -->|3. Datos válidos| C2
+    C2 -->|4. Crea usuario| E1
+    E1 -->|5. Usuario creado| C2
+    C2 -->|6. Solicita envío| C3
+    C3 -->|7. Envía email| B2
+    B2 -.->|8. Recibe| Actor
 
     classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
     classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
@@ -108,15 +108,15 @@ graph LR
     %% ENTITIES
     E1((Usuario<br/>DB))
 
-    Actor -->|Ingresa email/password| B1
-    B1 -->|Envía credenciales| C1
-    C1 -->|Valida formato| C2
-    C2 -->|Busca usuario| E1
-    E1 -->|Retorna datos| C2
-    C2 -->|Password válido| C3
-    C3 -->|Crea token| C2
-    C2 -->|Autoriza acceso| B2
-    B2 -.->|Visualiza| Actor
+    Actor -->|1. Ingresa email/password| B1
+    B1 -->|2. Envía credenciales| C1
+    C1 -->|3. Valida formato| C2
+    C2 -->|4. Busca usuario| E1
+    E1 -->|5. Retorna datos| C2
+    C2 -->|6. Password válido| C3
+    C3 -->|7. Crea token| C2
+    C2 -->|8. Autoriza acceso| B2
+    B2 -.->|9. Visualiza| Actor
 
     classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
     classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
@@ -166,20 +166,20 @@ graph LR
     E2((Precio<br/>DB))
     E3((Propiedad<br/>DB))
 
-    Actor -->|Solicita crear| C1
-    C1 -->|Obtiene| E1
-    C1 -->|Obtiene| E2
-    E1 -->|Lista| C1
-    E2 -->|Lista| C1
-    C1 -->|Muestra| B1
-    B1 -.->|Visualiza| Actor
-    Actor -->|Completa datos| B1
-    B1 -->|Envía| C2
-    C2 -->|Valida| C3
-    C3 -->|Inserta| E3
-    E3 -->|ID creado| C3
-    C3 -->|Redirige| B2
-    B2 -.->|Muestra| Actor
+    Actor -->|1. Solicita crear| C1
+    C1 -->|2. Obtiene| E1
+    C1 -->|3. Obtiene| E2
+    E1 -->|4. Lista| C1
+    E2 -->|5. Lista| C1
+    C1 -->|6. Muestra| B1
+    B1 -.->|7. Visualiza| Actor
+    Actor -->|8. Completa datos| B1
+    B1 -->|9. Envía| C2
+    C2 -->|10. Valida| C3
+    C3 -->|11. Inserta| E3
+    E3 -->|12. ID creado| C3
+    C3 -->|13. Redirige| B2
+    B2 -.->|14. Muestra| Actor
 
     classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
     classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
@@ -232,23 +232,23 @@ graph LR
     E2((Categoría<br/>DB))
     E3((Precio<br/>DB))
 
-    Actor -->|Selecciona| B1
-    B1 -->|ID propiedad| C1
-    C1 -->|Busca| E1
-    E1 -->|Retorna datos| C1
-    C1 -->|Autorizado| C2
-    C2 -->|Obtiene| E2
-    C2 -->|Obtiene| E3
-    E2 -->|Lista| C2
-    E3 -->|Lista| C2
-    C2 -->|Muestra| B2
-    B2 -.->|Visualiza| Actor
-    Actor -->|Modifica| B2
-    B2 -->|Envía| C3
-    C3 -->|Valida| C4
-    C4 -->|UPDATE| E1
-    E1 -->|Actualizado| C4
-    C4 -->|Redirige| B1
+    Actor -->|1. Selecciona| B1
+    B1 -->|2. ID propiedad| C1
+    C1 -->|3. Busca| E1
+    E1 -->|4. Retorna datos| C1
+    C1 -->|5. Autorizado| C2
+    C2 -->|6. Obtiene| E2
+    C2 -->|7. Obtiene| E3
+    E2 -->|8. Lista| C2
+    E3 -->|9. Lista| C2
+    C2 -->|10. Muestra| B2
+    B2 -.->|11. Visualiza| Actor
+    Actor -->|12. Modifica| B2
+    B2 -->|13. Envía| C3
+    C3 -->|14. Valida| C4
+    C4 -->|15. UPDATE| E1
+    E1 -->|16. Actualizado| C4
+    C4 -->|17. Redirige| B1
 
     classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
     classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
@@ -300,18 +300,18 @@ graph LR
     E1((Propiedad<br/>DB))
     E2((FileSystem))
 
-    Actor -->|Solicita eliminar| B1
-    B1 -->|ID propiedad| C1
-    C1 -->|Busca| E1
-    E1 -->|Retorna datos| C1
-    C1 -->|Autorizado| C2
-    C2 -->|Elimina imagen| E2
-    E2 -->|Confirmación| C2
-    C2 -->|Procede| C3
-    C3 -->|DELETE| E1
-    E1 -->|Eliminado| C3
-    C3 -->|Muestra| B2
-    B2 -.->|Visualiza| Actor
+    Actor -->|1. Solicita eliminar| B1
+    B1 -->|2. ID propiedad| C1
+    C1 -->|3. Busca| E1
+    E1 -->|4. Retorna datos| C1
+    C1 -->|5. Autorizado| C2
+    C2 -->|6. Elimina imagen| E2
+    E2 -->|7. Confirmación| C2
+    C2 -->|8. Procede| C3
+    C3 -->|9. DELETE| E1
+    E1 -->|10. Eliminado| C3
+    C3 -->|11. Muestra| B2
+    B2 -.->|12. Visualiza| Actor
 
     classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
     classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
