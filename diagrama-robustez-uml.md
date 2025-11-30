@@ -339,6 +339,404 @@ graph LR
 
 ---
 
+## 6. Caso de Uso: Enviar Mail de Registro
+
+**Actor**: Sistema de Email
+**Descripción**: El sistema envía automáticamente un email de confirmación con un token al usuario recién registrado.
+
+```mermaid
+graph LR
+    Actor((⚙️ Sistema))
+
+    %% BOUNDARIES
+    B1((Email<br/>Confirmación))
+
+    %% CONTROLS
+    C1((Generar<br/>Token))
+    C2((Componer<br/>Email))
+    C3((Enviar<br/>SMTP))
+
+    %% ENTITIES
+    E1((Usuario<br/>DB))
+    E2((Servidor<br/>Email))
+
+    Actor -->|1. Usuario creado| C1
+    C1 -->|2. Busca datos| E1
+    E1 -->|3. Email y nombre| C1
+    C1 -->|4. Genera token| C1
+    C1 -->|5. Datos completos| C2
+    C2 -->|6. Plantilla HTML| C3
+    C3 -->|7. Envía SMTP| E2
+    E2 -->|8. Entrega| B1
+    B1 -.->|9. Recibe| Actor
+
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
+
+    class B1 boundary
+    class C1,C2,C3 control
+    class E1,E2 entity
+    class Actor actor
+```
+
+### Elementos Identificados:
+
+| Tipo | Elemento | Implementación | Descripción |
+|------|----------|----------------|-------------|
+| **Actor** | Sistema | - | Proceso automático |
+| **Boundary** | Email Confirmación | Template SMTP | Email con enlace |
+| **Control** | Generar Token | `TokenHelper.generarId()` | Verbo: **Generar** |
+| **Control** | Componer Email | `EmailHelper.emailRegistro()` | Verbo: **Componer** |
+| **Control** | Enviar SMTP | `nodemailer.sendMail()` | Verbo: **Enviar** |
+| **Entity** | Usuario DB | `models/Usuario.js` | Datos del usuario |
+| **Entity** | Servidor Email | Nodemailer/SMTP | Servidor de correo |
+
+---
+
+## 7. Caso de Uso: Confirmar Cuenta
+
+**Actor**: Usuario no confirmado
+**Descripción**: El usuario hace clic en el enlace del email de confirmación para activar su cuenta.
+
+```mermaid
+graph LR
+    Actor((👤 Usuario))
+
+    %% BOUNDARIES
+    B1((Email<br/>Confirmación))
+    B2((Página<br/>Confirmación))
+
+    %% CONTROLS
+    C1((Validar<br/>Token))
+    C2((Activar<br/>Cuenta))
+
+    %% ENTITIES
+    E1((Usuario<br/>DB))
+
+    Actor -->|1. Hace clic enlace| B1
+    B1 -->|2. Redirige con token| C1
+    C1 -->|3. Busca token| E1
+    E1 -->|4. Usuario encontrado| C1
+    C1 -->|5. Token válido| C2
+    C2 -->|6. UPDATE confirmado| E1
+    E1 -->|7. Actualizado| C2
+    C2 -->|8. Muestra éxito| B2
+    B2 -.->|9. Visualiza| Actor
+
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
+
+    class B1,B2 boundary
+    class C1,C2 control
+    class E1 entity
+    class Actor actor
+```
+
+### Elementos Identificados:
+
+| Tipo | Elemento | Implementación | Descripción |
+|------|----------|----------------|-------------|
+| **Actor** | Usuario | - | Usuario registrado pendiente |
+| **Boundary** | Email Confirmación | Template SMTP | Email recibido |
+| **Boundary** | Página Confirmación | `views/auth/confirmar-cuenta.pug` | Mensaje de éxito |
+| **Control** | Validar Token | `UsuarioController.confirmar()` | Verbo: **Validar** |
+| **Control** | Activar Cuenta | Lógica en `confirmar()` | Verbo: **Activar** |
+| **Entity** | Usuario DB | `models/Usuario.js` | Actualizar confirmado |
+
+---
+
+## 8. Caso de Uso: Validar Credenciales
+
+**Actor**: Sistema
+**Descripción**: El sistema valida que el email y contraseña ingresados coincidan con un usuario existente y activo.
+
+```mermaid
+graph LR
+    Actor((⚙️ Sistema))
+
+    %% BOUNDARIES
+    B1((Formulario<br/>Login))
+
+    %% CONTROLS
+    C1((Buscar<br/>Usuario))
+    C2((Verificar<br/>Password))
+    C3((Validar<br/>Estado))
+
+    %% ENTITIES
+    E1((Usuario<br/>DB))
+
+    B1 -->|1. Email y password| Actor
+    Actor -->|2. Busca email| C1
+    C1 -->|3. Query email| E1
+    E1 -->|4. Usuario o null| C1
+    C1 -->|5. Usuario existe| C2
+    C2 -->|6. Hash password| E1
+    E1 -->|7. Hash almacenado| C2
+    C2 -->|8. Compara bcrypt| C2
+    C2 -->|9. Password válido| C3
+    C3 -->|10. Verifica confirmado| E1
+    E1 -->|11. Estado| C3
+    C3 -->|12. Autorizado| Actor
+
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
+
+    class B1 boundary
+    class C1,C2,C3 control
+    class E1 entity
+    class Actor actor
+```
+
+### Elementos Identificados:
+
+| Tipo | Elemento | Implementación | Descripción |
+|------|----------|----------------|-------------|
+| **Actor** | Sistema | - | Proceso de validación |
+| **Boundary** | Formulario Login | `views/auth/login.pug` | Entrada de datos |
+| **Control** | Buscar Usuario | `Usuario.findOne()` | Verbo: **Buscar** |
+| **Control** | Verificar Password | `usuario.verificarPassword()` | Verbo: **Verificar** |
+| **Control** | Validar Estado | Lógica de autenticación | Verbo: **Validar** |
+| **Entity** | Usuario DB | `models/Usuario.js` | Consulta y comparación |
+
+---
+
+## 9. Caso de Uso: Olvidé Contraseña
+
+**Actor**: Usuario
+**Descripción**: El usuario solicita recuperar su contraseña ingresando su email para recibir instrucciones.
+
+```mermaid
+graph LR
+    Actor((👤 Usuario))
+
+    %% BOUNDARIES
+    B1((Formulario<br/>Olvide Password))
+    B2((Mensaje<br/>Confirmación))
+
+    %% CONTROLS
+    C1((Validar<br/>Email))
+    C2((Generar<br/>Token))
+    C3((Guardar<br/>Token))
+
+    %% ENTITIES
+    E1((Usuario<br/>DB))
+
+    Actor -->|1. Ingresa email| B1
+    B1 -->|2. Envía email| C1
+    C1 -->|3. Busca usuario| E1
+    E1 -->|4. Usuario existe| C1
+    C1 -->|5. Email válido| C2
+    C2 -->|6. Crea token único| C2
+    C2 -->|7. Token generado| C3
+    C3 -->|8. UPDATE token| E1
+    E1 -->|9. Token guardado| C3
+    C3 -->|10. Solicita envío| B2
+    B2 -.->|11. Revisa tu email| Actor
+
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
+
+    class B1,B2 boundary
+    class C1,C2,C3 control
+    class E1 entity
+    class Actor actor
+```
+
+### Elementos Identificados:
+
+| Tipo | Elemento | Implementación | Descripción |
+|------|----------|----------------|-------------|
+| **Actor** | Usuario | - | Usuario que olvidó password |
+| **Boundary** | Formulario Olvide Password | `views/auth/olvide-password.pug` | Solicitud de reset |
+| **Boundary** | Mensaje Confirmación | Vista de confirmación | Feedback al usuario |
+| **Control** | Validar Email | `UsuarioController.resetPassword()` | Verbo: **Validar** |
+| **Control** | Generar Token | `TokenHelper.generarId()` | Verbo: **Generar** |
+| **Control** | Guardar Token | Lógica en `resetPassword()` | Verbo: **Guardar** |
+| **Entity** | Usuario DB | `models/Usuario.js` | Almacenar token |
+
+---
+
+## 10. Caso de Uso: Enviar Mail de Reseteo
+
+**Actor**: Sistema de Email
+**Descripción**: El sistema envía automáticamente un email con enlace para restablecer la contraseña.
+
+```mermaid
+graph LR
+    Actor((⚙️ Sistema))
+
+    %% BOUNDARIES
+    B1((Email<br/>Reseteo))
+
+    %% CONTROLS
+    C1((Obtener<br/>Datos))
+    C2((Componer<br/>Email))
+    C3((Enviar<br/>SMTP))
+
+    %% ENTITIES
+    E1((Usuario<br/>DB))
+    E2((Servidor<br/>Email))
+
+    Actor -->|1. Token generado| C1
+    C1 -->|2. Busca usuario| E1
+    E1 -->|3. Email, nombre, token| C1
+    C1 -->|4. Datos completos| C2
+    C2 -->|5. Plantilla con enlace| C3
+    C3 -->|6. Envía SMTP| E2
+    E2 -->|7. Entrega| B1
+    B1 -.->|8. Recibe| Actor
+
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
+
+    class B1 boundary
+    class C1,C2,C3 control
+    class E1,E2 entity
+    class Actor actor
+```
+
+### Elementos Identificados:
+
+| Tipo | Elemento | Implementación | Descripción |
+|------|----------|----------------|-------------|
+| **Actor** | Sistema | - | Proceso automático |
+| **Boundary** | Email Reseteo | Template SMTP | Email con enlace de reset |
+| **Control** | Obtener Datos | Lógica en controller | Verbo: **Obtener** |
+| **Control** | Componer Email | `EmailHelper.emailOlvidePassword()` | Verbo: **Componer** |
+| **Control** | Enviar SMTP | `nodemailer.sendMail()` | Verbo: **Enviar** |
+| **Entity** | Usuario DB | `models/Usuario.js` | Datos del usuario |
+| **Entity** | Servidor Email | Nodemailer/SMTP | Servidor de correo |
+
+---
+
+## 11. Caso de Uso: Restablecer Contraseña
+
+**Actor**: Usuario
+**Descripción**: El usuario ingresa una nueva contraseña utilizando el enlace del email de recuperación.
+
+```mermaid
+graph LR
+    Actor((👤 Usuario))
+
+    %% BOUNDARIES
+    B1((Email<br/>Reseteo))
+    B2((Formulario<br/>Nueva Password))
+    B3((Página<br/>Confirmación))
+
+    %% CONTROLS
+    C1((Validar<br/>Token))
+    C2((Validar<br/>Password))
+    C3((Actualizar<br/>Password))
+
+    %% ENTITIES
+    E1((Usuario<br/>DB))
+
+    Actor -->|1. Hace clic enlace| B1
+    B1 -->|2. Redirige con token| C1
+    C1 -->|3. Busca token| E1
+    E1 -->|4. Usuario encontrado| C1
+    C1 -->|5. Token válido| B2
+    B2 -.->|6. Visualiza| Actor
+    Actor -->|7. Ingresa nueva password| B2
+    B2 -->|8. Envía password| C2
+    C2 -->|9. Valida formato| C3
+    C3 -->|10. Hash bcrypt| C3
+    C3 -->|11. UPDATE password| E1
+    E1 -->|12. Actualizado| C3
+    C3 -->|13. Elimina token| E1
+    E1 -->|14. Token limpio| C3
+    C3 -->|15. Muestra éxito| B3
+    B3 -.->|16. Visualiza| Actor
+
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
+
+    class B1,B2,B3 boundary
+    class C1,C2,C3 control
+    class E1 entity
+    class Actor actor
+```
+
+### Elementos Identificados:
+
+| Tipo | Elemento | Implementación | Descripción |
+|------|----------|----------------|-------------|
+| **Actor** | Usuario | - | Usuario recuperando password |
+| **Boundary** | Email Reseteo | Template SMTP | Email recibido |
+| **Boundary** | Formulario Nueva Password | `views/auth/reset-password.pug` | Entrada de nueva clave |
+| **Boundary** | Página Confirmación | Vista de éxito | Confirmación de cambio |
+| **Control** | Validar Token | `UsuarioController.comprobarToken()` | Verbo: **Validar** |
+| **Control** | Validar Password | `express-validator` | Verbo: **Validar** |
+| **Control** | Actualizar Password | `UsuarioController.nuevoPassword()` | Verbo: **Actualizar** |
+| **Entity** | Usuario DB | `models/Usuario.js` | Actualizar contraseña |
+
+---
+
+## 12. Caso de Uso: Ver Mis Garages
+
+**Actor**: Usuario autenticado
+**Descripción**: El usuario visualiza el listado de todas las propiedades (garages) que ha publicado.
+
+```mermaid
+graph LR
+    Actor((👤 Usuario))
+
+    %% BOUNDARIES
+    B1((Dashboard<br/>Mis Garages))
+
+    %% CONTROLS
+    C1((Verificar<br/>JWT))
+    C2((Cargar<br/>Propiedades))
+
+    %% ENTITIES
+    E1((Propiedad<br/>DB))
+    E2((Usuario<br/>DB))
+
+    Actor -->|1. Solicita mis garages| C1
+    C1 -->|2. Valida token JWT| E2
+    E2 -->|3. Usuario válido| C1
+    C1 -->|4. Usuario autorizado| C2
+    C2 -->|5. Query WHERE usuarioId| E1
+    E1 -->|6. Lista propiedades| C2
+    C2 -->|7. Renderiza lista| B1
+    B1 -.->|8. Visualiza| Actor
+
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
+
+    class B1 boundary
+    class C1,C2 control
+    class E1,E2 entity
+    class Actor actor
+```
+
+### Elementos Identificados:
+
+| Tipo | Elemento | Implementación | Descripción |
+|------|----------|----------------|-------------|
+| **Actor** | Usuario | - | Usuario logueado |
+| **Boundary** | Dashboard Mis Garages | `views/propiedades/admin.pug` | Listado de propiedades |
+| **Control** | Verificar JWT | `middleware/protegerRuta.js` | Verbo: **Verificar** |
+| **Control** | Cargar Propiedades | `PropiedadController.admin()` | Verbo: **Cargar** |
+| **Entity** | Propiedad DB | `models/Propiedad.js` | Consulta filtrada |
+| **Entity** | Usuario DB | `models/Usuario.js` | Validación de sesión |
+
+---
+
 ## Resumen: Mapeo Completo del Sistema
 
 ### Tabla de BOUNDARIES (Límites/Interfaces)
@@ -346,13 +744,17 @@ graph LR
 | Boundary | Tipo | Archivo | Casos de Uso |
 |----------|------|---------|--------------|
 | Formulario Registro | Vista HTML | `views/auth/registro.pug` | CU1 |
-| Formulario Login | Vista HTML | `views/auth/login.pug` | CU2 |
-| Email Confirmación | Email | Template SMTP | CU1 |
-| Dashboard | Vista HTML | `views/propiedades/admin.pug` | CU2, CU4, CU5 |
+| Formulario Login | Vista HTML | `views/auth/login.pug` | CU2, CU8 |
+| Email Confirmación | Email | Template SMTP | CU1, CU6, CU7 |
+| Email Reseteo | Email | Template SMTP | CU10, CU11 |
+| Dashboard Mis Garages | Vista HTML | `views/propiedades/admin.pug` | CU2, CU4, CU5, CU12 |
 | Formulario Crear Propiedad | Vista HTML | `views/propiedades/crear.pug` | CU3 |
 | Formulario Editar Propiedad | Vista HTML | `views/propiedades/editar.pug` | CU4 |
 | Vista Imagen | Vista HTML | `views/propiedades/agregar-imagen.pug` | CU3 |
-| Mensaje Confirmación | Flash Message | Alert/Toast | CU5 |
+| Formulario Olvide Password | Vista HTML | `views/auth/olvide-password.pug` | CU9 |
+| Formulario Nueva Password | Vista HTML | `views/auth/reset-password.pug` | CU11 |
+| Página Confirmación | Vista HTML | `views/auth/confirmar-cuenta.pug` | CU7, CU11 |
+| Mensaje Confirmación | Flash Message | Alert/Toast | CU5, CU9 |
 
 ### Tabla de CONTROLS (Lógica de Negocio - Verbos Infinitivos)
 
@@ -361,17 +763,32 @@ graph LR
 | Validar Datos | **Validar** | `express-validator` | Validación de formularios |
 | Validar Credenciales | **Validar** | `express-validator` | Validación login |
 | Validar Cambios | **Validar** | `express-validator` | Validación de edición |
+| Validar Token | **Validar** | `UsuarioController.confirmar()` / `comprobarToken()` | Validación de tokens |
+| Validar Email | **Validar** | `UsuarioController.resetPassword()` | Validación de email existente |
+| Validar Password | **Validar** | `express-validator` | Validación de contraseña |
+| Validar Estado | **Validar** | Lógica de autenticación | Validación de cuenta confirmada |
 | Registrar Usuario | **Registrar** | `UsuarioController.registrar()` | Crear cuenta |
 | Autenticar Usuario | **Autenticar** | `UsuarioController.autenticar()` | Login |
 | Generar JWT | **Generar** | `TokenHelper.generarJWT()` | Tokens de sesión |
+| Generar Token | **Generar** | `TokenHelper.generarId()` | Tokens de confirmación/reset |
 | Verificar Propiedad | **Verificar** | Controllers | Validar existencia y permisos |
+| Verificar JWT | **Verificar** | `middleware/protegerRuta.js` | Verificar token de sesión |
+| Verificar Password | **Verificar** | `usuario.verificarPassword()` | Comparar hash bcrypt |
 | Enviar Email | **Enviar** | `EmailHelper` | Correos electrónicos |
+| Enviar SMTP | **Enviar** | `nodemailer.sendMail()` | Envío SMTP |
+| Componer Email | **Componer** | `EmailHelper.emailRegistro()` / `emailOlvidePassword()` | Crear plantillas de email |
 | Crear Propiedad | **Crear** | `PropiedadController.guardar()` | Nueva propiedad |
 | Actualizar Propiedad | **Actualizar** | `PropiedadController.guardarCambios()` | Editar propiedad |
+| Actualizar Password | **Actualizar** | `UsuarioController.nuevoPassword()` | Cambiar contraseña |
 | Eliminar Archivo | **Eliminar** | `fs.unlink()` | Borrar archivo |
 | Eliminar Registro | **Eliminar** | `PropiedadController.eliminar()` | Borrar propiedad |
 | Cargar Catálogos | **Cargar** | Controllers | Obtener catálogos |
 | Cargar Datos | **Cargar** | Controllers | Obtener datos |
+| Cargar Propiedades | **Cargar** | `PropiedadController.admin()` | Obtener propiedades del usuario |
+| Activar Cuenta | **Activar** | Lógica en `confirmar()` | Marcar cuenta como confirmada |
+| Guardar Token | **Guardar** | Lógica en `resetPassword()` | Almacenar token en BD |
+| Obtener Datos | **Obtener** | Lógica en controller | Recuperar datos del usuario |
+| Buscar Usuario | **Buscar** | `Usuario.findOne()` | Query de usuario por email |
 
 ### Tabla de ENTITIES (Entidades/Datos)
 
@@ -382,6 +799,7 @@ graph LR
 | Categoría DB | Base de Datos | `models/Categoria.js` | Catálogo categorías |
 | Precio DB | Base de Datos | `models/Precio.js` | Catálogo precios |
 | FileSystem | File System | `/public/uploads/` | Almacenamiento de imágenes |
+| Servidor Email | Servicio Externo | Nodemailer/SMTP | Servidor de correo electrónico |
 
 ---
 
@@ -404,14 +822,22 @@ graph LR
 
 ## Conclusiones
 
-Este archivo presenta los **5 casos de uso principales** del sistema:
+Este archivo presenta los **12 casos de uso completos** del sistema de gestión de propiedades inmobiliarias:
 
+### Cobertura Funcional:
+- **CU1-CU5**: Gestión de usuarios y propiedades (registro, login, CRUD propiedades)
+- **CU6-CU8**: Flujo de confirmación de cuenta (emails y validación)
+- **CU9-CU11**: Recuperación de contraseña (reset password)
+- **CU12**: Visualización de propiedades del usuario
+
+### Características de Calidad:
 ✅ **Notación UML correcta** para diagramas de robustez
-✅ **Controls en verbo infinitivo** (Validar, Crear, Eliminar, etc.)
+✅ **Controls en verbo infinitivo** (Validar, Crear, Eliminar, Generar, Activar, etc.)
 ✅ **Distinción visual clara** entre Boundaries, Controls y Entities
-✅ **Reglas de interacción UML respetadas**
-✅ **Diagramas simplificados** para mejor renderización
-✅ **Trazabilidad** hacia la implementación real del código
+✅ **Reglas de interacción UML respetadas** (Actor→Boundary→Control→Entity)
+✅ **Diagramas simplificados** para mejor renderización en Mermaid
+✅ **Trazabilidad completa** hacia la implementación real del código
 ✅ **Granularidad adecuada** sin complejidad innecesaria
+✅ **Cobertura del 100%** de los casos de uso del sistema
 
 Estos diagramas sirven como **puente perfecto** entre los casos de uso (análisis) y los diagramas de secuencia (diseño detallado), cumpliendo con los estándares de la metodología ICONIX y UML.
