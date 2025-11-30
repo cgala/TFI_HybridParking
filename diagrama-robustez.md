@@ -25,17 +25,17 @@ Los diagramas de robustez son parte de la metodología ICONIX y sirven como puen
 graph LR
     Actor((Usuario))
 
-    %% Boundaries
-    FormRegistro([Formulario<br/>Registro])
-    EmailConf([Email de<br/>Confirmación])
+    %% Boundaries - Círculos verdes
+    FormRegistro((Formulario<br/>Registro))
+    EmailConf((Email de<br/>Confirmación))
 
-    %% Controls
-    RegistrarCtrl[UsuarioController<br/>registrar]
-    TokenCtrl[TokenHelper<br/>generarId]
-    EmailCtrl[EmailHelper<br/>emailRegistro]
+    %% Controls - Círculos amarillos
+    RegistrarCtrl((UsuarioController<br/>registrar))
+    TokenCtrl((TokenHelper<br/>generarId))
+    EmailCtrl((EmailHelper<br/>emailRegistro))
 
-    %% Entities
-    UsuarioEnt[(Usuario)]
+    %% Entities - Círculos azules
+    UsuarioEnt((Usuario))
 
     Actor -->|1. Ingresa datos| FormRegistro
     FormRegistro -->|2. Envía datos| RegistrarCtrl
@@ -47,13 +47,15 @@ graph LR
     EmailCtrl -->|8. Envía email| EmailConf
     EmailConf -.->|9. Recibe email| Actor
 
-    classDef boundary fill:#90EE90,stroke:#333,stroke-width:3px
-    classDef control fill:#FFD700,stroke:#333,stroke-width:2px
-    classDef entity fill:#87CEEB,stroke:#333,stroke-width:2px
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
 
     class FormRegistro,EmailConf boundary
     class RegistrarCtrl,TokenCtrl,EmailCtrl control
     class UsuarioEnt entity
+    class Actor actor
 ```
 
 **Elementos identificados:**
@@ -72,18 +74,18 @@ graph LR
 graph LR
     Actor((Usuario))
 
-    %% Boundaries
-    FormLogin([Formulario<br/>Login])
-    Dashboard([Dashboard<br/>Mis Propiedades])
+    %% Boundaries - Círculos verdes
+    FormLogin((Formulario<br/>Login))
+    Dashboard((Dashboard<br/>Mis Propiedades))
 
-    %% Controls
-    AutenticarCtrl[UsuarioController<br/>autenticar]
-    TokenCtrl[TokenHelper<br/>generarJWT]
-    ProtegerCtrl[ProtegerRuta<br/>middleware]
-    EventCtrl[EventEmitter<br/>userLoggedIn]
+    %% Controls - Círculos amarillos
+    AutenticarCtrl((UsuarioController<br/>autenticar))
+    TokenCtrl((TokenHelper<br/>generarJWT))
+    ProtegerCtrl((ProtegerRuta<br/>middleware))
+    EventCtrl((EventEmitter<br/>userLoggedIn))
 
-    %% Entities
-    UsuarioEnt[(Usuario)]
+    %% Entities - Círculos azules
+    UsuarioEnt((Usuario))
 
     Actor -->|1. Ingresa email/password| FormLogin
     FormLogin -->|2. Envía credenciales| AutenticarCtrl
@@ -95,13 +97,15 @@ graph LR
     AutenticarCtrl -->|8. Redirige| Dashboard
     Dashboard -.->|9. Visualiza| Actor
 
-    classDef boundary fill:#90EE90,stroke:#333,stroke-width:3px
-    classDef control fill:#FFD700,stroke:#333,stroke-width:2px
-    classDef entity fill:#87CEEB,stroke:#333,stroke-width:2px
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
 
     class FormLogin,Dashboard boundary
     class AutenticarCtrl,TokenCtrl,ProtegerCtrl,EventCtrl control
     class UsuarioEnt entity
+    class Actor actor
 ```
 
 **Elementos identificados:**
@@ -120,20 +124,20 @@ graph LR
 graph LR
     Actor((Usuario<br/>Autenticado))
 
-    %% Boundaries
-    FormCrear([Formulario<br/>Crear Propiedad])
-    FormImagen([Formulario<br/>Agregar Imagen])
+    %% Boundaries - Círculos verdes
+    FormCrear((Formulario<br/>Crear Propiedad))
+    FormImagen((Formulario<br/>Agregar Imagen))
 
-    %% Controls
-    CrearCtrl[PropiedadController<br/>crear]
-    GuardarCtrl[PropiedadController<br/>guardar]
-    ValidarCtrl[Express-Validator<br/>body validations]
-    EventCtrl[EventEmitter<br/>propertyCreated]
+    %% Controls - Círculos amarillos
+    CrearCtrl((PropiedadController<br/>crear))
+    GuardarCtrl((PropiedadController<br/>guardar))
+    ValidarCtrl((Express-Validator<br/>validations))
+    EventCtrl((EventEmitter<br/>propertyCreated))
 
-    %% Entities
-    PropiedadEnt[(Propiedad)]
-    CategoriaEnt[(Categoria)]
-    PrecioEnt[(Precio)]
+    %% Entities - Círculos azules
+    PropiedadEnt((Propiedad))
+    CategoriaEnt((Categoria))
+    PrecioEnt((Precio))
 
     Actor -->|1. Solicita crear| CrearCtrl
     CrearCtrl -->|2. Obtiene catálogos| CategoriaEnt
@@ -151,13 +155,15 @@ graph LR
     GuardarCtrl -->|14. Redirige| FormImagen
     FormImagen -.->|15. Visualiza| Actor
 
-    classDef boundary fill:#90EE90,stroke:#333,stroke-width:3px
-    classDef control fill:#FFD700,stroke:#333,stroke-width:2px
-    classDef entity fill:#87CEEB,stroke:#333,stroke-width:2px
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
 
     class FormCrear,FormImagen boundary
     class CrearCtrl,GuardarCtrl,ValidarCtrl,EventCtrl control
     class PropiedadEnt,CategoriaEnt,PrecioEnt entity
+    class Actor actor
 ```
 
 **Elementos identificados:**
@@ -176,21 +182,21 @@ graph LR
 graph LR
     Actor((Usuario<br/>Autenticado))
 
-    %% Boundaries
-    FormEditar([Formulario<br/>Editar Propiedad])
-    ListaProp([Lista<br/>Mis Propiedades])
+    %% Boundaries - Círculos verdes
+    FormEditar((Formulario<br/>Editar Propiedad))
+    ListaProp((Lista<br/>Mis Propiedades))
 
-    %% Controls
-    EditarCtrl[PropiedadController<br/>editar]
-    GuardarCambiosCtrl[PropiedadController<br/>guardarCambios]
-    ValidarCtrl[Express-Validator<br/>validations]
-    ProtegerCtrl[ProtegerRuta<br/>verifica owner]
+    %% Controls - Círculos amarillos
+    EditarCtrl((PropiedadController<br/>editar))
+    GuardarCambiosCtrl((PropiedadController<br/>guardarCambios))
+    ValidarCtrl((Express-Validator<br/>validations))
+    ProtegerCtrl((ProtegerRuta<br/>verifica owner))
 
-    %% Entities
-    PropiedadEnt[(Propiedad)]
-    CategoriaEnt[(Categoria)]
-    PrecioEnt[(Precio)]
-    UsuarioEnt[(Usuario)]
+    %% Entities - Círculos azules
+    PropiedadEnt((Propiedad))
+    CategoriaEnt((Categoria))
+    PrecioEnt((Precio))
+    UsuarioEnt((Usuario))
 
     Actor -->|1. Selecciona propiedad| ListaProp
     ListaProp -->|2. Solicita editar| EditarCtrl
@@ -210,13 +216,15 @@ graph LR
     GuardarCambiosCtrl -->|16. Redirige| ListaProp
     ListaProp -.->|17. Visualiza lista| Actor
 
-    classDef boundary fill:#90EE90,stroke:#333,stroke-width:3px
-    classDef control fill:#FFD700,stroke:#333,stroke-width:2px
-    classDef entity fill:#87CEEB,stroke:#333,stroke-width:2px
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
 
     class FormEditar,ListaProp boundary
     class EditarCtrl,GuardarCambiosCtrl,ValidarCtrl,ProtegerCtrl control
     class PropiedadEnt,CategoriaEnt,PrecioEnt,UsuarioEnt entity
+    class Actor actor
 ```
 
 **Elementos identificados:**
@@ -235,19 +243,19 @@ graph LR
 graph LR
     Actor((Usuario<br/>Autenticado))
 
-    %% Boundaries
-    FormImagen([Formulario<br/>Subir Imagen])
-    ListaProp([Lista<br/>Mis Propiedades])
+    %% Boundaries - Círculos verdes
+    FormImagen((Formulario<br/>Subir Imagen))
+    ListaProp((Lista<br/>Mis Propiedades))
 
-    %% Controls
-    AgregarImgCtrl[PropiedadController<br/>agregarImagen]
-    AlmacenarImgCtrl[PropiedadController<br/>almacenarImagen]
-    UploadCtrl[Multer<br/>upload.single]
-    ProtegerCtrl[ProtegerRuta<br/>verifica owner]
+    %% Controls - Círculos amarillos
+    AgregarImgCtrl((PropiedadController<br/>agregarImagen))
+    AlmacenarImgCtrl((PropiedadController<br/>almacenarImagen))
+    UploadCtrl((Multer<br/>upload.single))
+    ProtegerCtrl((ProtegerRuta<br/>verifica owner))
 
-    %% Entities
-    PropiedadEnt[(Propiedad)]
-    FileSystem[(FileSystem<br/>public/uploads/)]
+    %% Entities - Círculos azules
+    PropiedadEnt((Propiedad))
+    FileSystem((FileSystem<br/>public/uploads/))
 
     Actor -->|1. Selecciona propiedad| AgregarImgCtrl
     AgregarImgCtrl -->|2. Busca propiedad| PropiedadEnt
@@ -266,13 +274,15 @@ graph LR
     AlmacenarImgCtrl -->|15. Redirige| ListaProp
     ListaProp -.->|16. Visualiza lista| Actor
 
-    classDef boundary fill:#90EE90,stroke:#333,stroke-width:3px
-    classDef control fill:#FFD700,stroke:#333,stroke-width:2px
-    classDef entity fill:#87CEEB,stroke:#333,stroke-width:2px
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
 
     class FormImagen,ListaProp boundary
     class AgregarImgCtrl,AlmacenarImgCtrl,UploadCtrl,ProtegerCtrl control
     class PropiedadEnt,FileSystem entity
+    class Actor actor
 ```
 
 **Elementos identificados:**
@@ -291,19 +301,19 @@ graph LR
 graph LR
     Actor((Usuario<br/>Autenticado))
 
-    %% Boundaries
-    ListaProp([Lista<br/>Mis Propiedades])
-    Confirmacion([Mensaje<br/>Confirmación])
+    %% Boundaries - Círculos verdes
+    ListaProp((Lista<br/>Mis Propiedades))
+    Confirmacion((Mensaje<br/>Confirmación))
 
-    %% Controls
-    EliminarCtrl[PropiedadController<br/>eliminar]
-    ProtegerCtrl[ProtegerRuta<br/>verifica owner]
-    EventCtrl[EventEmitter<br/>propertyDeleted]
+    %% Controls - Círculos amarillos
+    EliminarCtrl((PropiedadController<br/>eliminar))
+    ProtegerCtrl((ProtegerRuta<br/>verifica owner))
+    EventCtrl((EventEmitter<br/>propertyDeleted))
 
-    %% Entities
-    PropiedadEnt[(Propiedad)]
-    FileSystem[(FileSystem<br/>unlink imagen)]
-    UsuarioEnt[(Usuario)]
+    %% Entities - Círculos azules
+    PropiedadEnt((Propiedad))
+    FileSystem((FileSystem<br/>unlink imagen))
+    UsuarioEnt((Usuario))
 
     Actor -->|1. Selecciona eliminar| ListaProp
     ListaProp -->|2. Envía solicitud| EliminarCtrl
@@ -319,13 +329,15 @@ graph LR
     EliminarCtrl -->|12. Redirige| Confirmacion
     Confirmacion -.->|13. Visualiza mensaje| Actor
 
-    classDef boundary fill:#90EE90,stroke:#333,stroke-width:3px
-    classDef control fill:#FFD700,stroke:#333,stroke-width:2px
-    classDef entity fill:#87CEEB,stroke:#333,stroke-width:2px
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
 
     class ListaProp,Confirmacion boundary
     class EliminarCtrl,ProtegerCtrl,EventCtrl control
     class PropiedadEnt,FileSystem,UsuarioEnt entity
+    class Actor actor
 ```
 
 **Elementos identificados:**
@@ -344,22 +356,22 @@ graph LR
 graph LR
     Actor((Usuario))
 
-    %% Boundaries
-    FormOlvide([Formulario<br/>Olvidé Password])
-    EmailReset([Email<br/>Reset Password])
-    FormNuevo([Formulario<br/>Nueva Password])
-    FormLogin([Formulario<br/>Login])
+    %% Boundaries - Círculos verdes
+    FormOlvide((Formulario<br/>Olvidé Password))
+    EmailReset((Email<br/>Reset Password))
+    FormNuevo((Formulario<br/>Nueva Password))
+    FormLogin((Formulario<br/>Login))
 
-    %% Controls
-    FormOlvideCtrl[UsuarioController<br/>formularioOlvidePassword]
-    ResetCtrl[UsuarioController<br/>resetPassword]
-    TokenCtrl[TokenHelper<br/>generarId]
-    EmailCtrl[EmailHelper<br/>emailOlvidePassword]
-    ComprobarCtrl[UsuarioController<br/>comprobarToken]
-    NuevoPassCtrl[UsuarioController<br/>nuevoPassword]
+    %% Controls - Círculos amarillos
+    FormOlvideCtrl((UsuarioController<br/>formularioOlvidePassword))
+    ResetCtrl((UsuarioController<br/>resetPassword))
+    TokenCtrl((TokenHelper<br/>generarId))
+    EmailCtrl((EmailHelper<br/>emailOlvidePassword))
+    ComprobarCtrl((UsuarioController<br/>comprobarToken))
+    NuevoPassCtrl((UsuarioController<br/>nuevoPassword))
 
-    %% Entities
-    UsuarioEnt[(Usuario)]
+    %% Entities - Círculos azules
+    UsuarioEnt((Usuario))
 
     Actor -->|1. Solicita recuperar| FormOlvide
     FormOlvide -->|2. Ingresa email| FormOlvideCtrl
@@ -384,13 +396,15 @@ graph LR
     NuevoPassCtrl -->|21. Redirige| FormLogin
     FormLogin -.->|22. Visualiza login| Actor
 
-    classDef boundary fill:#90EE90,stroke:#333,stroke-width:3px
-    classDef control fill:#FFD700,stroke:#333,stroke-width:2px
-    classDef entity fill:#87CEEB,stroke:#333,stroke-width:2px
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
 
     class FormOlvide,EmailReset,FormNuevo,FormLogin boundary
     class FormOlvideCtrl,ResetCtrl,TokenCtrl,EmailCtrl,ComprobarCtrl,NuevoPassCtrl control
     class UsuarioEnt entity
+    class Actor actor
 ```
 
 **Elementos identificados:**
@@ -409,18 +423,18 @@ graph LR
 graph LR
     Actor((Usuario<br/>Autenticado))
 
-    %% Boundaries
-    Dashboard([Dashboard<br/>Mis Propiedades])
+    %% Boundaries - Círculos verdes
+    Dashboard((Dashboard<br/>Mis Propiedades))
 
-    %% Controls
-    AdminCtrl[PropiedadController<br/>admin]
-    ProtegerCtrl[ProtegerRuta<br/>middleware]
+    %% Controls - Círculos amarillos
+    AdminCtrl((PropiedadController<br/>admin))
+    ProtegerCtrl((ProtegerRuta<br/>middleware))
 
-    %% Entities
-    PropiedadEnt[(Propiedad)]
-    CategoriaEnt[(Categoria)]
-    PrecioEnt[(Precio)]
-    UsuarioEnt[(Usuario)]
+    %% Entities - Círculos azules
+    PropiedadEnt((Propiedad))
+    CategoriaEnt((Categoria))
+    PrecioEnt((Precio))
+    UsuarioEnt((Usuario))
 
     Actor -->|1. Accede a dashboard| ProtegerCtrl
     ProtegerCtrl -->|2. Verifica JWT| UsuarioEnt
@@ -436,13 +450,15 @@ graph LR
     AdminCtrl -->|12. Renderiza vista| Dashboard
     Dashboard -.->|13. Visualiza lista| Actor
 
-    classDef boundary fill:#90EE90,stroke:#333,stroke-width:3px
-    classDef control fill:#FFD700,stroke:#333,stroke-width:2px
-    classDef entity fill:#87CEEB,stroke:#333,stroke-width:2px
+    classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
+    classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
+    classDef entity fill:#87CEEB,stroke:#00008B,stroke-width:3px,color:#000
+    classDef actor fill:#FFB6C1,stroke:#8B0000,stroke-width:2px,color:#000
 
     class Dashboard boundary
     class AdminCtrl,ProtegerCtrl control
     class PropiedadEnt,CategoriaEnt,PrecioEnt,UsuarioEnt entity
+    class Actor actor
 ```
 
 **Elementos identificados:**

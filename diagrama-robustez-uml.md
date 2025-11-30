@@ -38,22 +38,22 @@ Los diagramas de robustez son parte de la metodología ICONIX y sirven como puen
 **Descripción**: El usuario completa el formulario de registro y recibe un email de confirmación.
 
 ```mermaid
-graph TB
-    Actor([👤 Usuario No<br/>Registrado])
+graph LR
+    Actor((👤 Usuario No<br/>Registrado))
 
     %% BOUNDARIES - Círculos verdes
     B1((Formulario<br/>Registro))
     B2((Email de<br/>Confirmación))
 
-    %% CONTROLS - Círculos amarillos con símbolo ⊗
-    C1{⊗<br/>Validar<br/>Datos}
-    C2{⊗<br/>Registrar<br/>Usuario}
-    C3{⊗<br/>Generar<br/>Token}
-    C4{⊗<br/>Enviar<br/>Email}
+    %% CONTROLS - Círculos amarillos
+    C1((Validar<br/>Datos))
+    C2((Registrar<br/>Usuario))
+    C3((Generar<br/>Token))
+    C4((Enviar<br/>Email))
 
-    %% ENTITIES - Rectángulos azules
-    E1[(Usuario<br/>DB)]
-    E2[(Token<br/>DB)]
+    %% ENTITIES - Círculos azules
+    E1((Usuario<br/>DB))
+    E2((Token<br/>DB))
 
     Actor -->|1. Ingresa datos| B1
     B1 -->|2. Envía formulario| C1
@@ -99,24 +99,24 @@ graph TB
 **Descripción**: El usuario ingresa sus credenciales y accede al sistema.
 
 ```mermaid
-graph TB
-    Actor([👤 Usuario<br/>Registrado])
+graph LR
+    Actor((👤 Usuario<br/>Registrado))
 
     %% BOUNDARIES
     B1((Formulario<br/>Login))
     B2((Dashboard<br/>Propiedades))
 
     %% CONTROLS
-    C1{⊗<br/>Validar<br/>Credenciales}
-    C2{⊗<br/>Autenticar<br/>Usuario}
-    C3{⊗<br/>Generar<br/>JWT}
-    C4{⊗<br/>Proteger<br/>Ruta}
-    C5{⊗<br/>Registrar<br/>Evento}
+    C1((Validar<br/>Credenciales))
+    C2((Autenticar<br/>Usuario))
+    C3((Generar<br/>JWT))
+    C4((Proteger<br/>Ruta))
+    C5((Registrar<br/>Evento))
 
     %% ENTITIES
-    E1[(Usuario<br/>DB)]
-    E2[(Sesión<br/>JWT)]
-    E3[(Log de<br/>Eventos)]
+    E1((Usuario<br/>DB))
+    E2((Sesión<br/>JWT))
+    E3((Log de<br/>Eventos))
 
     Actor -->|1. Ingresa email/password| B1
     B1 -->|2. Envía credenciales| C1
@@ -167,25 +167,25 @@ graph TB
 **Descripción**: El usuario crea una nueva propiedad ingresando título, descripción, ubicación, etc.
 
 ```mermaid
-graph TB
-    Actor([👤 Usuario<br/>Autenticado])
+graph LR
+    Actor((👤 Usuario<br/>Autenticado))
 
     %% BOUNDARIES
     B1((Formulario<br/>Crear))
     B2((Formulario<br/>Imagen))
 
     %% CONTROLS
-    C1{⊗<br/>Cargar<br/>Catálogos}
-    C2{⊗<br/>Validar<br/>Datos}
-    C3{⊗<br/>Crear<br/>Propiedad}
-    C4{⊗<br/>Asociar<br/>Usuario}
-    C5{⊗<br/>Notificar<br/>Creación}
+    C1((Cargar<br/>Catálogos))
+    C2((Validar<br/>Datos))
+    C3((Crear<br/>Propiedad))
+    C4((Asociar<br/>Usuario))
+    C5((Notificar<br/>Creación))
 
     %% ENTITIES
-    E1[(Categoría<br/>DB)]
-    E2[(Precio<br/>DB)]
-    E3[(Propiedad<br/>DB)]
-    E4[(Usuario<br/>DB)]
+    E1((Categoría<br/>DB))
+    E2((Precio<br/>DB))
+    E3((Propiedad<br/>DB))
+    E4((Usuario<br/>DB))
 
     Actor -->|1. Solicita crear| B1
     B1 -->|2. Solicita datos| C1
@@ -243,25 +243,25 @@ graph TB
 **Descripción**: El usuario modifica los datos de una propiedad existente.
 
 ```mermaid
-graph TB
-    Actor([👤 Usuario<br/>Dueño])
+graph LR
+    Actor((👤 Usuario<br/>Dueño))
 
     %% BOUNDARIES
     B1((Lista<br/>Propiedades))
     B2((Formulario<br/>Editar))
 
     %% CONTROLS
-    C1{⊗<br/>Verificar<br/>Propiedad}
-    C2{⊗<br/>Cargar<br/>Datos}
-    C3{⊗<br/>Validar<br/>Cambios}
-    C4{⊗<br/>Actualizar<br/>Propiedad}
-    C5{⊗<br/>Verificar<br/>Permisos}
+    C1((Verificar<br/>Propiedad))
+    C2((Cargar<br/>Datos))
+    C3((Validar<br/>Cambios))
+    C4((Actualizar<br/>Propiedad))
+    C5((Verificar<br/>Permisos))
 
     %% ENTITIES
-    E1[(Propiedad<br/>DB)]
-    E2[(Categoría<br/>DB)]
-    E3[(Precio<br/>DB)]
-    E4[(Usuario<br/>DB)]
+    E1((Propiedad<br/>DB))
+    E2((Categoría<br/>DB))
+    E3((Precio<br/>DB))
+    E4((Usuario<br/>DB))
 
     Actor -->|1. Selecciona| B1
     B1 -->|2. ID propiedad| C1
@@ -322,25 +322,25 @@ graph TB
 **Descripción**: El usuario sube una imagen para una propiedad previamente creada.
 
 ```mermaid
-graph TB
-    Actor([👤 Usuario<br/>Dueño])
+graph LR
+    Actor((👤 Usuario<br/>Dueño))
 
     %% BOUNDARIES
     B1((Formulario<br/>Subir Imagen))
     B2((Lista<br/>Propiedades))
 
     %% CONTROLS
-    C1{⊗<br/>Verificar<br/>Propiedad}
-    C2{⊗<br/>Validar<br/>Archivo}
-    C3{⊗<br/>Procesar<br/>Imagen}
-    C4{⊗<br/>Guardar<br/>Imagen}
-    C5{⊗<br/>Actualizar<br/>Registro}
-    C6{⊗<br/>Publicar<br/>Propiedad}
+    C1((Verificar<br/>Propiedad))
+    C2((Validar<br/>Archivo))
+    C3((Procesar<br/>Imagen))
+    C4((Guardar<br/>Imagen))
+    C5((Actualizar<br/>Registro))
+    C6((Publicar<br/>Propiedad))
 
     %% ENTITIES
-    E1[(Propiedad<br/>DB)]
-    E2[(Sistema de<br/>Archivos<br/>public/uploads/)]
-    E3[(Usuario<br/>DB)]
+    E1((Propiedad<br/>DB))
+    E2((Sistema de<br/>Archivos))
+    E3((Usuario<br/>DB))
 
     Actor -->|1. Selecciona propiedad| B1
     B1 -->|2. ID propiedad| C1
@@ -401,25 +401,25 @@ graph TB
 **Descripción**: El usuario elimina una propiedad y su imagen asociada del sistema.
 
 ```mermaid
-graph TB
-    Actor([👤 Usuario<br/>Dueño])
+graph LR
+    Actor((👤 Usuario<br/>Dueño))
 
     %% BOUNDARIES
     B1((Lista<br/>Propiedades))
     B2((Mensaje<br/>Confirmación))
 
     %% CONTROLS
-    C1{⊗<br/>Verificar<br/>Propiedad}
-    C2{⊗<br/>Verificar<br/>Permisos}
-    C3{⊗<br/>Eliminar<br/>Imagen}
-    C4{⊗<br/>Eliminar<br/>Registro}
-    C5{⊗<br/>Notificar<br/>Eliminación}
+    C1((Verificar<br/>Propiedad))
+    C2((Verificar<br/>Permisos))
+    C3((Eliminar<br/>Imagen))
+    C4((Eliminar<br/>Registro))
+    C5((Notificar<br/>Eliminación))
 
     %% ENTITIES
-    E1[(Propiedad<br/>DB)]
-    E2[(Sistema de<br/>Archivos<br/>unlink)]
-    E3[(Usuario<br/>DB)]
-    E4[(Log de<br/>Eventos)]
+    E1((Propiedad<br/>DB))
+    E2((Sistema de<br/>Archivos))
+    E3((Usuario<br/>DB))
+    E4((Log de<br/>Eventos))
 
     Actor -->|1. Selecciona eliminar| B1
     B1 -->|2. ID propiedad| C1
@@ -475,8 +475,8 @@ graph TB
 **Descripción**: El usuario solicita restablecer su contraseña y recibe un email con un enlace único.
 
 ```mermaid
-graph TB
-    Actor([👤 Usuario<br/>Sin Acceso])
+graph LR
+    Actor((👤 Usuario<br/>Sin Acceso))
 
     %% BOUNDARIES
     B1((Formulario<br/>Olvidé Password))
@@ -485,16 +485,16 @@ graph TB
     B4((Formulario<br/>Login))
 
     %% CONTROLS
-    C1{⊗<br/>Validar<br/>Email}
-    C2{⊗<br/>Generar<br/>Token}
-    C3{⊗<br/>Enviar<br/>Email}
-    C4{⊗<br/>Comprobar<br/>Token}
-    C5{⊗<br/>Actualizar<br/>Password}
-    C6{⊗<br/>Hashear<br/>Password}
+    C1((Validar<br/>Email))
+    C2((Generar<br/>Token))
+    C3((Enviar<br/>Email))
+    C4((Comprobar<br/>Token))
+    C5((Actualizar<br/>Password))
+    C6((Hashear<br/>Password))
 
     %% ENTITIES
-    E1[(Usuario<br/>DB)]
-    E2[(Token<br/>Reset)]
+    E1((Usuario<br/>DB))
+    E2((Token<br/>Reset))
 
     Actor -->|1. Solicita reset| B1
     B1 -->|2. Ingresa email| C1
@@ -562,23 +562,23 @@ graph TB
 **Descripción**: El usuario visualiza todas sus propiedades con opciones de editar, eliminar o agregar imagen.
 
 ```mermaid
-graph TB
-    Actor([👤 Usuario<br/>Autenticado])
+graph LR
+    Actor((👤 Usuario<br/>Autenticado))
 
     %% BOUNDARIES
     B1((Dashboard<br/>Mis Propiedades))
 
     %% CONTROLS
-    C1{⊗<br/>Verificar<br/>JWT}
-    C2{⊗<br/>Obtener<br/>Propiedades}
-    C3{⊗<br/>Cargar<br/>Relaciones}
-    C4{⊗<br/>Renderizar<br/>Vista}
+    C1((Verificar<br/>JWT))
+    C2((Obtener<br/>Propiedades))
+    C3((Cargar<br/>Relaciones))
+    C4((Renderizar<br/>Vista))
 
     %% ENTITIES
-    E1[(Usuario<br/>DB)]
-    E2[(Propiedad<br/>DB)]
-    E3[(Categoría<br/>DB)]
-    E4[(Precio<br/>DB)]
+    E1((Usuario<br/>DB))
+    E2((Propiedad<br/>DB))
+    E3((Categoría<br/>DB))
+    E4((Precio<br/>DB))
 
     Actor -->|1. Accede a dashboard| C1
     C1 -->|2. Valida token| E1
