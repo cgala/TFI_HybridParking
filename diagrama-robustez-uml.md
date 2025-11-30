@@ -475,11 +475,10 @@ graph LR
     C1 -->|5. Usuario existe| C2
     C2 -->|6. Hash password| E1
     E1 -->|7. Hash almacenado| C2
-    C2 -->|8. Compara bcrypt| C2
-    C2 -->|9. Password válido| C3
-    C3 -->|10. Verifica confirmado| E1
-    E1 -->|11. Estado| C3
-    C3 -->|12. Autorizado| Actor
+    C2 -->|8. Password válido| C3
+    C3 -->|9. Verifica confirmado| E1
+    E1 -->|10. Estado| C3
+    C3 -->|11. Autorizado| Actor
 
     classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
     classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
