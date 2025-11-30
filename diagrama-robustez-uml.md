@@ -530,12 +530,11 @@ graph LR
     C1 -->|3. Busca usuario| E1
     E1 -->|4. Usuario existe| C1
     C1 -->|5. Email válido| C2
-    C2 -->|6. Crea token único| C2
-    C2 -->|7. Token generado| C3
-    C3 -->|8. UPDATE token| E1
-    E1 -->|9. Token guardado| C3
-    C3 -->|10. Solicita envío| B2
-    B2 -.->|11. Revisa tu email| Actor
+    C2 -->|6. Crea token único| C3
+    C3 -->|7. UPDATE token| E1
+    E1 -->|8. Token guardado| C3
+    C3 -->|9. Solicita envío| B2
+    B2 -.->|10. Revisa tu email| Actor
 
     classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
     classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
