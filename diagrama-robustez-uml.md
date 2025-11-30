@@ -647,13 +647,12 @@ graph LR
     Actor -->|7. Ingresa nueva password| B2
     B2 -->|8. Envía password| C2
     C2 -->|9. Valida formato| C3
-    C3 -->|10. Hash bcrypt| C3
-    C3 -->|11. UPDATE password| E1
-    E1 -->|12. Actualizado| C3
-    C3 -->|13. Elimina token| E1
-    E1 -->|14. Token limpio| C3
-    C3 -->|15. Muestra éxito| B3
-    B3 -.->|16. Visualiza| Actor
+    C3 -->|10. UPDATE password| E1
+    E1 -->|11. Actualizado| C3
+    C3 -->|12. Elimina token| E1
+    E1 -->|13. Token limpio| C3
+    C3 -->|14. Muestra éxito| B3
+    B3 -.->|15. Visualiza| Actor
 
     classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
     classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
