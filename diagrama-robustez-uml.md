@@ -363,12 +363,11 @@ graph LR
     Actor -->|1. Usuario creado| C1
     C1 -->|2. Busca datos| E1
     E1 -->|3. Email y nombre| C1
-    C1 -->|4. Genera token| C1
-    C1 -->|5. Datos completos| C2
-    C2 -->|6. Plantilla HTML| C3
-    C3 -->|7. Envía SMTP| E2
-    E2 -->|8. Entrega| B1
-    B1 -.->|9. Recibe| Actor
+    C1 -->|4. Datos completos| C2
+    C2 -->|5. Plantilla HTML| C3
+    C3 -->|6. Envía SMTP| E2
+    E2 -->|7. Entrega| B1
+    B1 -.->|8. Recibe| Actor
 
     classDef boundary fill:#90EE90,stroke:#2d5016,stroke-width:3px,color:#000
     classDef control fill:#FFD700,stroke:#8B7500,stroke-width:3px,color:#000
