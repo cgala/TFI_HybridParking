@@ -1,5 +1,4 @@
-
-2025-07-14T05:49:19.167Z [propertyCreated] {"id":"c2fbd8ea-1049-4090-92e7-963c59788938","titulo":"dsadas"}
-2025-07-14T05:50:32.655Z [propertyCreated] {"id":"21600c51-936c-40d9-a852-f1ca99af5ddf","titulo":"dsadas"}
-2025-07-14T06:04:03.791Z [propertyDeleted] {"id":"64ee6e8d-d681-4228-ab2b-713855af0725","titulo":"Garage espacioso, acepto autos, lanchas, motos, etc.."}
-2025-07-14T06:11:19.360Z [userLoggedIn] {"email":"qwe@qwe.com","nombre":"cristian"}
+2025-12-03T00:32:20.816Z [userLoggedIn] {"email":"criss@gmail.com","nombre":"criss"}
+2025-12-03T00:39:49.850Z [userLoggedIn] {"email":"criss@gmail.com","nombre":"criss"}
+2025-12-03T00:42:53.106Z [propertyCreated] {"id":"beab6a38-942e-4223-84e6-f782b47ee193","titulo":"Garaje para auto electrico con cargador wallbox"}
+2025-12-03T00:46:06.864Z [propertyCreated] {"id":"84f6b5b2-c0da-443f-9978-da239a44083d","titulo":"Garaje para chata o vehiculó grande a combustión por calle Pellegrini!"}

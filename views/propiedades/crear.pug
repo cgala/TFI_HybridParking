@@ -6,7 +6,7 @@ block styles
 block contenido
 
   div.py-10
-    h1.text-4xl.my-10.font-extrabold.text-center Casual
+    h1.text-4xl.my-10.font-extrabold.text-center Hybrid
       span.font-normal Parking
     h2.text-center.text-2xl.font-extrabold= pagina
 
@@ -24,7 +24,7 @@ block contenido
 
                 div
                     label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="titulo") Titulo del anuncio
-                    input#titulo.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Eje. Garage techado al aire libre, con alarma" type="text" name="titulo" value=datos.titulo ? datos.titulo : '')
+                    input#titulo.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Eje. Garage apto electrico con cargador wallbox, con alarma" type="text" name="titulo" value=datos.titulo ? datos.titulo : '')
 
                 div
                     label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="descripcion") Descripcion
@@ -48,11 +48,11 @@ block contenido
 
                 div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
                   div(class="md:w-1/3")
-                      label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="techado") Espacio Techado?
-                      select#techado.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="techado")
+                      label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="electrico") Espacio apto auto electrico?
+                      select#electrico.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="electrico")
                           option(value="") - Seleccione - 
-                          option(value="si" selected= datos.techado ? datos.techado == "si" ? true : false : null) Sí
-                          option(value="no" selected= datos.techado ? datos.techado == "no" ? true : false : null) No
+                          option(value="si" selected= datos.electrico ? datos.electrico == "si" ? true : false : null) Sí
+                          option(value="no" selected= datos.electrico ? datos.electrico == "no" ? true : false : null) No
 
                   div(class="md:w-1/3")
                       label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="alarma") Espacio con alarma?

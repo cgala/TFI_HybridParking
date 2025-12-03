@@ -72,14 +72,14 @@ const guardar = async (req, res) => {
     }
 
     // Crear un Registro
-    const { titulo, descripcion, techado, alarma, expensa, calle, lat, lng, precio: precioId, categoria: categoriaId } = req.body
+    const { titulo, descripcion, electrico, alarma, expensa, calle, lat, lng, precio: precioId, categoria: categoriaId } = req.body
     const { id: usuarioId } = req.usuario
 
     try {
         const propiedadGuardada = await Propiedad.create({
             titulo,
             descripcion,
-            techado, 
+            electrico, 
             alarma, 
             expensa,
             calle,
@@ -241,13 +241,13 @@ const guardarCambios = async (req, res) => {
 
     //actualizar el objeto
     try {
-        const { titulo, descripcion, techado, alarma, expensa, calle, lat, lng, precio: precioId, categoria: categoriaId } = req.body
+        const { titulo, descripcion, electrico, alarma, expensa, calle, lat, lng, precio: precioId, categoria: categoriaId } = req.body
         const { id: usuarioId } = req.usuario
 
         propiedad.set({
             titulo,
             descripcion,
-            techado,
+            electrico,
             alarma,
             expensa,
             calle,

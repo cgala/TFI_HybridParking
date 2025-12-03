@@ -15,12 +15,12 @@ const emailRegistro = async (datos) => {
     const { email, nombre, token } = datos
     //enviar mail
     await transport.sendMail({
-        from: 'CasualParking.com.ar',
+        from: 'HybridParking.com.ar',
         to: email,
-        subject: 'Confirma tu cuenta en CasualParking.com.ar',
-        text: 'Confirma tu cuenta en CasualParking.com.ar',
+        subject: 'Confirma tu cuenta en HybridParking.com.ar',
+        text: 'Confirma tu cuenta en HybridParking.com.ar',
         html: `
-            <p> Hola ${nombre}, confirma tu cuenta en CasualParking</p>
+            <p> Hola ${nombre}, confirma tu cuenta en HybridParking</p>
             <p> Clic en el siguiente enlace: 
             <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/confirmar/${token}">Confirmar cuenta</a></p>
 
@@ -43,12 +43,12 @@ const emaiLOlvidePassword = async (datos) => {
     const { email, nombre, token } = datos
     //enviar mail
     await transport.sendMail({
-        from: 'CasualParking.com.ar',
+        from: 'HybridParking.com.ar',
         to: email,
-        subject: 'Cambiar password en CasualParking.com.ar',
-        text: 'Cambiar password en CasualParking.com.ar',
+        subject: 'Cambiar password en HybridParking.com.ar',
+        text: 'Cambiar password en HybridParking.com.ar',
         html: `
-            <p> Hola ${nombre}, cambia tu password en CasualParking</p>
+            <p> Hola ${nombre}, cambia tu password en HybridParking</p>
             <p> Clic en el siguiente enlace: 
             <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/olvide-password/${token}">Cambiar password</a></p>
 

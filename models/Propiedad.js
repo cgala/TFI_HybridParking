@@ -16,7 +16,7 @@ const Propiedad = db.define('propiedades', {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    techado: {
+    electrico: {
         type: DataTypes.STRING,
         allowNull: false
     },
